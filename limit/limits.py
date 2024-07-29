@@ -556,7 +556,7 @@ def get_total_cross_section(energy, particle_type):
         the cross section
     """
 
-    if particle_type is 'neutrino':
+    if particle_type == 'neutrino':
         c_0_cc = -1.826
         c_0_nc = -1.826
         c_1_cc = -17.31
@@ -567,7 +567,7 @@ def get_total_cross_section(energy, particle_type):
         c_3_nc = 1.431
         c_4_cc = -17.91
         c_4_nc = -18.61
-    elif particle_type is 'antineutrino':
+    elif particle_type == 'antineutrino':
         c_0_cc = -1.033
         c_0_nc = -1.033
         c_1_cc = -15.95
