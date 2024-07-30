@@ -460,20 +460,20 @@ class LimitFigure:
                          color='purple', linewidth=1.0)
             if self.e_power==2:
                 self.ax.annotate('ARA2 (2x4yr)',
-                                 xy=(6.5e7, 4.5e-7*self.e_bins), xycoords='data',
+                                 xy=(1.4e10, 5.1e-7*self.e_bins), xycoords='data',
                                  horizontalalignment='left', color='purple', 
-                                 rotation=-35, fontsize=12)
+                                 rotation=15)
             if self.e_power==1:
                 self.ax.annotate('ARA (2x4yr)',
                                  xy=(3e8, 15.5e-17*self.e_bins), xycoords='data',
                                  horizontalalignment='left', color='purple', 
-                                 rotation=-41, fontsize=12)
+                                 rotation=-41)
         else:
             raise ValueError("Unrecognized data set '"+str(name)+"'")
 
 
     def build_base_plot(self, group='clean', experiments=None, models=None):
-        if group=='ara_a23':
+        if group=='rnog_proposal':
             if experiments is None:
                 experiments = ['anitaiv', 'auger_2019', 'ara_a23', 'arianna_2019',
                                'ice_cube_ehe', 'ice_cube_hese_data', 'ice_cube_mu_fit']

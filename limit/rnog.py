@@ -23,19 +23,23 @@ for l in available_livetime:
     veff in km^3 sr (include your own factor of 4 pi)
 '''
 veff = {
+    # this comes from Martin's simulation of a single station
     "SMT" : {
         "energy" : 10**np.array([16.0, 16.5, 
                              17.0, 17.5, 
                              18.0, 18.5, 
                              19.0, 19.5, 
                              20.0])/1E9,
-        "veff" : np.array([3.1765e-3, 3.7186e-2,
-                           2.2075e-1, 1.1656e+0,
-                           3.8534e+0, 1.0198e+1,
-                           2.1860e+1, 4.7970e+1,
-                           9.1468e+1
-                           ])
+        "veff": np.array([1.108e-03, 3.112e-02,
+                          2.030e-01, 7.434e-01,
+                          2.642e+00, 7.020e+00,
+                          1.664e+01, 4.001e+01,
+                          7.632e+01
+                          ])
     },
+    # this comes from the RNO-G white paper
+    # the figure directly digitized is the 35 station array in km^3
+    # so we need to divide by 35, and add the 4 pi to get "per station"
     "PA": {
         "energy" : 10**np.array([16.0, 16.5, 
                              17.0, 17.5, 
@@ -47,7 +51,7 @@ veff = {
                           1.0233e+1, 2.4266e+1,
                           5.0992e+1, 9.8288e+1,
                           1.8621e+2
-                          ])
+                          ])/35*np.pi*4
     }
 }
 
@@ -105,7 +109,7 @@ def compute_exposure(additional_years, uptime_fraction = 0.45):
     print(existing_livetime)
 
     veff_smt = veff["SMT"]["veff"]
-    exposure_smt = veff_smt * existing_livetime * a23_efficiency["efficiency"]
+    exposure_smt = veff_smt * existing_livetime # * a23_efficiency["efficiency"]
 
     # the exposure with the PA trigger we will have
     future_livetime = additional_years * uptime_fraction
