@@ -24,7 +24,7 @@ for l in available_livetime:
 '''
 veff = {
     # this comes from Martin's simulation of a single station
-    "SMT" : {
+    "SMT_Martin" : {
         "energy" : 10**np.array([16.0, 16.5, 
                              17.0, 17.5, 
                              18.0, 18.5, 
@@ -35,6 +35,14 @@ veff = {
                           2.642e+00, 7.020e+00,
                           1.664e+01, 4.001e+01,
                           7.632e+01
+                          ])
+    },
+    # this comes from Aishwary's estimates
+    "SMT" : {
+        "energy" : 10**np.array([17.0, 18.0, 
+                             19.0, 20.0])/1E9,
+        "veff": np.array([0.001988, 0.3073,
+                          2.227, 14.29,
                           ])
     },
     # this comes from the RNO-G white paper
@@ -117,6 +125,7 @@ def compute_exposure(additional_years, uptime_fraction = 0.45):
     veff_pa = veff["PA"]["veff"]
     exposure_pa = veff_pa * future_livetime
 
-    return veff["PA"]["energy"], exposure_smt + exposure_pa
+    # return veff["PA"]["energy"], exposure_smt + exposure_pa
+    return veff["SMT"]["energy"], exposure_smt
 
 
