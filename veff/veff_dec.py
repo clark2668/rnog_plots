@@ -170,4 +170,4 @@ for a in [ax, ax2]:
     a.tick_params(axis='both', which='major', labelsize=15)
 
 plt.tight_layout()
-plt.savefig('combo_veffvsen_veffvsdec.png',bbox_inches='tight', dpi=300)
+plt.savefig('combo_veffvsen_veffvsdec.pdf',bbox_inches='tight', dpi=300)
