@@ -273,6 +273,12 @@ fig.tight_layout()
 #labels = add_limit(ax, labels, veff[:, 0], veff[:, 1], n_stations=1000, livetime=5 * units.year, label=veff_label)
 #plt.legend(handles=labels, loc=2)
 if DIFFUSE:
+    name_plot = "Limit_diffuse_single.png"
+else:
+    name_plot = "Limit_sources.png"
+plt.savefig(name_plot)
+
+if DIFFUSE:
     name_plot = "Limit_diffuse_single.pdf"
 else:
     name_plot = "Limit_sources.pdf"

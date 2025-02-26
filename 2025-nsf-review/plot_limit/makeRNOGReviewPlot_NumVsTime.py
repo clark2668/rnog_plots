@@ -274,3 +274,4 @@ ax_ratevstime.grid()
 
 fig.tight_layout()
 fig.savefig(f"num_vs_time.pdf", dpi=300)
+fig.savefig(f"num_vs_time.png", dpi=300)
