@@ -3,5 +3,4 @@
 This makes the plots for the NSF strategic review.
 Particularly the following two plots:
 
-![alt text](plot_limit/num_vs_time.png =100x100)
-
+<img src="plot_limit/num_vs_time.png" alt="Alt Text" width="300" height="200">
