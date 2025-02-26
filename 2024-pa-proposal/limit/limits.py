@@ -15,7 +15,8 @@ class LimitFigure:
 
         self.ax.set_xlabel(r'Neutrino Energy [GeV]')
         if e_power==2:
-            self.ax.set_ylabel(r'$E^2 dN/(dE\ dA\ d\Omega\ dt)$ [GeV cm$^{-2}$ s$^{-1}$ sr$^{-1}$]')
+            # self.ax.set_ylabel(r'$E^2 dN/(dE\ dA\ d\Omega\ dt)$ [GeV cm$^{-2}$ s$^{-1}$ sr$^{-1}$]')
+            self.ax.set_ylabel(r'$E^2 \Phi$ [GeV cm$^{-2}$ s$^{-1}$ sr$^{-1}$]')
         elif e_power==1:
             self.ax.set_ylabel(r'$E\ dN/(dE\ dA\ d\Omega\ dt)$ [cm$^{-2}$ s$^{-1}$ sr$^{-1}$]')
         else:
@@ -221,12 +222,12 @@ class LimitFigure:
         elif name=='kotera':
             energy, _, band_min, band_max = self.get_data('models/kotera_band.txt')
             compositions = self.ax.fill_between(energy, band_min, band_max,
-                                                color='gray', alpha=0.25,
+                                                color='cornflowerblue', alpha=0.25,
                                                 label=r'UHECR, Olinto et al.')
 
             energy, flux, _, _ = self.get_data('models/kotera_high_e.txt')
             kotera_high, = self.ax.plot(energy, flux,
-                                        color='deeppink', linestyle='--',
+                                        color='darkblue', linestyle='--',
                                         label=r'SFR $E_{max}=10^{21.5}$, Kotera et al.') # (1009.1382)
 
             # energy, flux, _, _ = self.get_data('sensitivities/kotera_mid.txt')
@@ -346,7 +347,11 @@ class LimitFigure:
         elif name=='ice_cube_ehe':
             energy, flux, _, _ = self.get_data('experiments/ice_cube_ehe.txt')
             self.ax.plot(energy, flux,
-                         color='dodgerblue')
+                         color='grey')
+            self.ax.annotate('IceCube',
+                                xy=(1e7, 0.95e-8), xycoords='data',
+                                horizontalalignment='center', color='gray', rotation=17)
+
 
         elif name=='ice_cube_hese_data':
             energy, flux, err_min, err_max = self.get_data('experiments/ice_cube_hese.txt')
@@ -396,72 +401,72 @@ class LimitFigure:
         elif name=='anitaiv':
             energy, flux, _, _ = self.get_data('experiments/anita_iv.txt')
             self.ax.plot(energy, flux,
-                         color='darkorange')
+                         color='grey')
             if self.e_power==2:
                 self.ax.annotate('ANITA I - IV',
                                  xy=(4e9, 5e-6*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='darkorange')
+                                 horizontalalignment='left', color='grey')
             if self.e_power==1:
                 self.ax.annotate('ANITA I - IV',
                                  xy=(2e9, 1e-14*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='darkorange', fontsize=12)
+                                 horizontalalignment='left', color='grey', fontsize=12)
 
         elif name=='auger':
             energy, flux, _, _ = self.get_data('experiments/auger.txt')
             self.ax.plot(energy, flux,
-                         color='forestgreen')
+                         color='grey')
             if self.e_power==2:
                 self.ax.annotate('Auger',
                                  xy=(1.2e8, 1.1e-7*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='forestgreen', rotation=-40)
+                                 horizontalalignment='left', color='grey', rotation=-40)
             if self.e_power==1:
                 self.ax.annotate('Auger',
                                  xy=(3e10, 9.5e-18*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='forestgreen', rotation=-8, fontsize=12)
+                                 horizontalalignment='left', color='grey', rotation=-8, fontsize=12)
         elif name=='auger_2019':
             energy, flux, _, _ = self.get_data('experiments/auger_2019.txt')
             self.ax.plot(energy, flux,
-                         color='forestgreen')
+                         color='grey')
             if self.e_power==2:
                 self.ax.annotate('Auger',
-                                 xy=(7e7, 5e-8*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='forestgreen', rotation=-40)
+                                 xy=(4e7, 5e-8*self.e_bins), xycoords='data',
+                                 horizontalalignment='left', color='grey', rotation=-40)
             if self.e_power==1:
                 self.ax.annotate("Auger",
                                  xy=(5e7, 2e-15*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='forestgreen', rotation=0, fontsize=12)
+                                 horizontalalignment='left', color='grey', rotation=0, fontsize=12)
         elif name=='arianna':
             energy, flux, _, _ = self.get_data('experiments/arianna.txt')
             self.ax.plot(energy, flux*2.,
-                         color='firebrick')
+                         color='grey')
             if self.e_power==2:
                 self.ax.annotate('ARIANNA (7x3yr)',
                                  xy=(1.2e8, 1.1e-7*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='forestgreen', rotation=-40)
+                                 horizontalalignment='left', color='grey', rotation=-40)
             if self.e_power==1:
                 self.ax.annotate('ARIANNA (7x3yr)',
                                  xy=(5e9, 8.7e-17*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='firebrick', rotation=-25, fontsize=12)
+                                 horizontalalignment='left', color='grey', rotation=-25, fontsize=12)
         elif name=='arianna_2019':
             energy, flux, _, _ = self.get_data('experiments/arianna_2019.txt')
             self.ax.plot(energy, flux*2.,
-                         color='firebrick')
+                         color='grey')
             if self.e_power==2:
                 self.ax.annotate('ARIANNA (7x4.5yr)',
-                                 xy=(6.5e9, 1.7e-6*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='firebrick', rotation=20)
+                                 xy=(6.8e9, 1.9e-6*self.e_bins), xycoords='data',
+                                 horizontalalignment='left', color='grey', rotation=20)
             if self.e_power==1:
                 self.ax.annotate('ARIANNA (7x4.5yr)',
                                  xy=(3.6e9, 9.6e-17*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='firebrick', rotation=-26, fontsize=12)
+                                 horizontalalignment='left', color='grey', rotation=-26, fontsize=12)
         elif name=='ara_a23':
             energy, flux, _, _ = self.get_data('experiments/ara_a23.txt')
             self.ax.plot(energy, flux,
-                         color='purple', linewidth=1.0)
+                         color='grey', linewidth=1.0)
             if self.e_power==2:
                 self.ax.annotate('ARA2 (2x4yr)',
                                  xy=(1.4e10, 5.1e-7*self.e_bins), xycoords='data',
-                                 horizontalalignment='left', color='purple', 
+                                 horizontalalignment='left', color='grey', 
                                  rotation=15)
             if self.e_power==1:
                 self.ax.annotate('ARA (2x4yr)',
@@ -475,8 +480,9 @@ class LimitFigure:
     def build_base_plot(self, group='clean', experiments=None, models=None):
         if group=='rnog_proposal':
             if experiments is None:
-                experiments = ['anitaiv', 'auger_2019', 'ara_a23', 'arianna_2019',
-                               'ice_cube_ehe', 'ice_cube_hese_data', 'ice_cube_mu_fit']
+                # experiments = ['anitaiv', 'auger_2019', 'ara_a23', 'arianna_2019',
+                #                'ice_cube_ehe', 'ice_cube_hese_data', 'ice_cube_mu_fit']
+                experiments = ['anitaiv', 'auger_2019', 'ara_a23', 'arianna_2019', 'ice_cube_ehe']
             if models is None:
                 models = ['kotera', 'ahlers']
         else:
@@ -509,7 +515,7 @@ class LimitFigure:
                              limits / self.f_unit,
                              color=color, linestyle=linestyle,
                              label=label,
-                             linewidth=3,
+                             linewidth=5,
                              zorder=100+len(self.custom_limits))
         self.custom_limits.append(_plt)
         return energies/self.e_unit, limits/self.f_unit
@@ -524,10 +530,10 @@ class LimitFigure:
     def show(self, legend_size=12, save_name=None, *args, **kwargs):
         if self.e_power==2:
             self.ax.add_artist(plt.legend(handles=self.neutrino_models, loc=4, fontsize=legend_size))
-            self.ax.add_artist(plt.legend(handles=self.custom_limits, loc=2, fontsize=legend_size))
+            # self.ax.add_artist(plt.legend(handles=self.custom_limits, loc=2, fontsize=legend_size))
         elif self.e_power==1:
             self.ax.add_artist(plt.legend(handles=self.neutrino_models, loc=3, fontsize=legend_size))
-            self.ax.add_artist(plt.legend(handles=self.custom_limits, loc=1, fontsize=legend_size))
+            # self.ax.add_artist(plt.legend(handles=self.custom_limits, loc=1, fontsize=legend_size))
         plt.tight_layout()
         if save_name is not None:
             plt.savefig(save_name, *args, **kwargs)

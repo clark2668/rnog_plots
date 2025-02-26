@@ -17,115 +17,42 @@ available_livetime = {
 for l in available_livetime:
     available_livetime[l] = available_livetime[l]*days_to_years
 
+existing_livetime = 0.
+for k in available_livetime.keys():
+    existing_livetime += available_livetime[k]
+
+
+
 '''
     Effective volumes
     energy in GeV
     veff in km^3 sr (include your own factor of 4 pi)
 '''
+steradian = 4 * np.pi
 veff = {
-    # this comes from Martin's simulation of a single station
-    "SMT_Martin" : {
-        "energy" : 10**np.array([16.0, 16.5, 
-                             17.0, 17.5, 
-                             18.0, 18.5, 
-                             19.0, 19.5, 
-                             20.0])/1E9,
-        "veff": np.array([1.108e-03, 3.112e-02,
-                          2.030e-01, 7.434e-01,
-                          2.642e+00, 7.020e+00,
-                          1.664e+01, 4.001e+01,
-                          7.632e+01
-                          ])
+    "wp" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([4.24E-03, 2.76E-02, 1.14E-01, 3.05E-01, 6.56E-01, 1.15E+00, 1.70E+00, 2.15E+00])*steradian
     },
-    # this comes from Aishwary's estimates
-    "SMT" : {
-        "energy" : 10**np.array([17.0, 18.0, 
-                             19.0, 20.0])/1E9,
-        "veff": np.array([0.001988, 0.3073,
-                          2.227, 14.29,
-                          ])
+    "deep_high_low_1Hz" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([3.896e-04,  3.842e-03,  2.220e-02,  9.383e-02,  2.907e-01, 7.191e-01,  1.965e+00,  3.486e+00])*steradian
     },
-    # this comes from the RNO-G white paper
-    # the figure directly digitized is the 35 station array in km^3
-    # so we need to divide by 35, and add the 4 pi to get "per station"
-    "PA": {
-        "energy" : 10**np.array([16.0, 16.5, 
-                             17.0, 17.5, 
-                             18.0, 18.5, 
-                             19.0, 19.5, 
-                             20.0])/1E9,
-        "veff": np.array([1.4207e-2, 1.3884e-1,
-                          9.2790e-1, 3.6940e+0,
-                          1.0233e+1, 2.4266e+1,
-                          5.0992e+1, 9.8288e+1,
-                          1.8621e+2
-                          ])/35*np.pi*4
-    }
+    "simple_threshold_2" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([3.586e-03,  2.327e-02,  8.989e-02,  2.771e-01,  7.419e-01,1.541e+00,  3.338e+00,  5.682e+00])*steradian
+    },
+    "simple_threshold_2.5" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([2.284e-03,  1.679e-02,  6.545e-02,  2.190e-01,  6.244e-01, 1.311e+00,  2.894e+00,  5.113e+00])*steradian
+    },
+    "simple_threshold_2.5_downsampled" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([1.605e-03,  1.168e-02,  5.175e-02,  1.876e-01,  5.345e-01, 1.171e+00,  2.689e+00,  4.774e+00])*steradian
+    },
+    "simple_threshold_3_downsampled" : {
+        "energy" : 10**np.array([16.50, 17.00, 17.50, 18.00, 18.50, 19.00, 19.50, 20])/1E9,
+        "veff": np.array([1.146e-03,  9.014e-03,  4.066e-02,  1.569e-01,  4.493e-01, 1.037e+00,  2.417e+00,  4.413e+00])*steradian
+    },
+
 }
-
-pa_efficiency = {
-    "energy" : 10**np.array([16.00, 16.500, 17.000,
-                             17.500, 18.000, 18.500, 
-                             19.000, 19.500, 20.000]),
-    "efficiency" : np.array([0.45, 0.50735344, 0.53663997, 
-                             0.63748401, 0.73041842, 0.79534748,
-                             0.84517992, 0.83591592, 0.83591592])
-    }
-
-a23_efficiency = {
-    "energy" : 10**np.array([16.00, 16.500, 17.000,
-                             17.500, 18.000, 18.500, 
-                             19.000, 19.500, 20.000]),
-    "efficiency" : np.array([0.05, 0.1595, 0.2426, 
-                             0.3067, 0.3724, 0.4452,
-                             0.5187, 0.5453, 0.5747])
-    }
-
-data_ara_200 = {
-    "arasim": {
-        "energy": 10**np.array([16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0]) / 1e9,
-        "veff": np.array([1.105E-1, 5.195E-1, 1.826E+0, 5.259E+0,
-                          1.106E+1, 2.077E+1, 3.431E+1, 5.073E+1])
-    }
-}
-
-
-
-def compute_exposure(additional_years, uptime_fraction = 0.45):
-    '''
-    additional_years
-        How many additional years of data do you want to assume we take?
-
-    uptime_assumption
-        How much of the year do you think we will be on and taking data?
-        Currently, we're achieving "SBC on" about 70% of the time
-        The digitizers are on about 45% of the time
-        "Good science" data is more like 30%
-
-
-    returns
-
-    energies in GeV
-    exposure in km^3 sr years (sorry about the years...)
-    '''
-
-
-    # the exposure with the 2/4 SMT so far
-    existing_livetime = 0.
-    for k in available_livetime.keys():
-        existing_livetime += available_livetime[k]
-    print(existing_livetime)
-
-    veff_smt = veff["SMT"]["veff"]
-    exposure_smt = veff_smt * existing_livetime # * a23_efficiency["efficiency"]
-
-    # the exposure with the PA trigger we will have
-    future_livetime = additional_years * uptime_fraction
-
-    veff_pa = veff["PA"]["veff"]
-    exposure_pa = veff_pa * future_livetime
-
-    # return veff["PA"]["energy"], exposure_smt + exposure_pa
-    return veff["SMT"]["energy"], exposure_smt
-
-
