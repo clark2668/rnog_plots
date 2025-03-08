@@ -1,0 +1,12 @@
+# Source: All-flavor flux from Fig. 2 of arXiv:2502.06944 
+# Data type: Flux
+# Column values:
+# Energy [GeV]
+# Flux [GeV cm^-2 s^-1 sr^-1]
+# Energy error up [GeV]
+# Energy error down [GeV]
+# Flux error up [GeV cm^-2 s^-1 sr^-1]
+# Flux error down [GeV cm^-2 s^-1 sr^-1]
+
+6.846E+06	1.739E-09	3.190E+06	2.204E+06	1.551E-09	9.621E-10
+1.471E+07	1.367E-09	6.857E+06	4.677E+06	1.857E-09	9.614E-10

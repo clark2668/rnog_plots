@@ -117,7 +117,6 @@ for i in range(0,1):
     show_astro=True)
     
 
-    import numpy as np
     data_rodgrigues = np.genfromtxt("data/flux_rodrigues_all_agn_source.dat", names=["energy", "nue", "numu", "nutau", "nuebar", "numubar", "nutaubar"])
     flux_rodrigues = data_rodgrigues["nue"] + data_rodgrigues["numu"] + data_rodgrigues["nutau"] + data_rodgrigues["nuebar"] + data_rodgrigues["numubar"] + data_rodgrigues["nutaubar"]
     energy_rodrigues = data_rodgrigues["energy"]*1E9 #convert to eV
@@ -172,33 +171,28 @@ for i in range(0,1):
 
     axs.fill_between(energy_fang, flux_fang*1E-10, flux_fang, color='#6baed6')
 
-    # ara
-
-    ara_energies = np.asarray([1.02E+07, 3.19E+07, 1.01E+08, 3.35E+08, 1.09E+09,
-                               3.10E+09, 1.05E+10, 3.12E+10, 1.08E+11, 3.34E+11, 9.30E+11])
-    ara_ses = np.asarray([5.75E-13, 2.87E-14, 2.43E-15, 3.01E-16, 6.00E-17,
-                          1.78E-17, 5.23E-18, 2.20E-18, 9.26E-19, 4.57E-19, 2.80E-19]) * ara_energies # make E2
-    ara_energies *= 1E9 # convert to eV for our plot
-
-    ax.plot(ara_energies, ara_ses, color="grey", alpha=0.5, linewidth=4)
-
-    ax.annotate('ARA-5',
-                xy=(1.5E16 * units.eV / plotUnitsEnergy, 0.5e-6* 3.0 * flavorRatio), xycoords='data',
-                horizontalalignment='left', color='grey', fontsize=14, rotation=-60, alpha=0.75)
+    # # ara
+    # ara_energies = np.asarray([1.02E+07, 3.19E+07, 1.01E+08, 3.35E+08, 1.09E+09,
+    #                            3.10E+09, 1.05E+10, 3.12E+10, 1.08E+11, 3.34E+11, 9.30E+11])
+    # ara_ses = np.asarray([5.75E-13, 2.87E-14, 2.43E-15, 3.01E-16, 6.00E-17,
+    #                       1.78E-17, 5.23E-18, 2.20E-18, 9.26E-19, 4.57E-19, 2.80E-19]) * ara_energies # make E2
+    # ara_energies *= 1E9 # convert to eV for our plot
+    # ax.plot(ara_energies, ara_ses, color="grey", alpha=0.5, linewidth=4)
+    # ax.annotate('ARA-5',
+    #             xy=(1.5E16 * units.eV / plotUnitsEnergy, 0.5e-6* 3.0 * flavorRatio), xycoords='data',
+    #             horizontalalignment='left', color='grey', fontsize=14, rotation=-60, alpha=0.75)
 
 
 
-    # gen2 
-    gen2_energies = np.asarray([1.06E+07, 3.56E+07, 1.10E+08, 4.53E+08, 1.47E+09,
-                                3.84E+09, 1.20E+10, 3.50E+10, 7.87E+10]) * 1E9 # to eV
-    gen2_limit = np.asarray([2.18E-09, 6.99E-10, 3.46E-10, 2.60E-10, 2.81E-10,
-                             3.21E-10, 4.19E-10, 5.78E-10, 7.69E-10])
-
-    ax.plot(gen2_energies, gen2_limit, color="grey",linewidth=4)
-
-    ax.annotate('Gen2',
-                xy=(1.3E16 * units.eV / plotUnitsEnergy, 0.4e-9* 3.0 * flavorRatio), xycoords='data',
-                horizontalalignment='left', color='grey', fontsize=14, rotation=-40)
+    # # gen2 
+    # gen2_energies = np.asarray([1.06E+07, 3.56E+07, 1.10E+08, 4.53E+08, 1.47E+09,
+    #                             3.84E+09, 1.20E+10, 3.50E+10, 7.87E+10]) * 1E9 # to eV
+    # gen2_limit = np.asarray([2.18E-09, 6.99E-10, 3.46E-10, 2.60E-10, 2.81E-10,
+    #                          3.21E-10, 4.19E-10, 5.78E-10, 7.69E-10])
+    # ax.plot(gen2_energies, gen2_limit, color="grey",linewidth=4)
+    # ax.annotate('Gen2',
+    #             xy=(1.3E16 * units.eV / plotUnitsEnergy, 0.4e-9* 3.0 * flavorRatio), xycoords='data',
+    #             horizontalalignment='left', color='grey', fontsize=14, rotation=-40)
 
 
     # the km3net event
@@ -211,17 +205,30 @@ for i in range(0,1):
     eb = ax.errorbar([energy50_evt], [flux_arca],
         xerr = [[energy50_evt-energy5_evt], [energy95_evt-energy50_evt]],
         yerr = [[flux_arca-flux_lo], [flux_hi-flux_arca]],
-        color="grey", lw=3, alpha=0.5
+        color='#5CACE2', lw=3, alpha=0.5
         )
     eb[-1][0].set_linestyle('-.')
     eb[-1][1].set_linestyle('-.')
-    ax.annotate('KM3NeT',
-        xy=(2.2e17 * units.eV / plotUnitsEnergy, 7.3e-8* 3.0 * flavorRatio), xycoords='data',
-        horizontalalignment='right', color='grey', rotation=-50,fontsize=14, alpha=0.75)
+    # ax.annotate('KM3NeT',
+    #     xy=(2.2e17 * units.eV / plotUnitsEnergy, 7.3e-8* 3.0 * flavorRatio), xycoords='data',
+    #     horizontalalignment='right', color='#5CACE2', rotation=-50,fontsize=14, alpha=0.75)
 
     # handles = [leg_transgz, leg_pulars, leg_agn, leg_bllacs]
 
     # specific_model_legs = plt.legend(handles=handles, loc=6, fontsize=legendfontsize, handlelength=4)
+
+    # IceCube super-PeV points from Muzio
+    data_muzio_5PeVI3 = np.genfromtxt("data/icecube_over5PeV_flux.txt",
+                                names=["E", "f", "E_hi", "E_lo", "f_hi", "f_lo"]
+                                )
+    data_muzio_5PeVI3["E"]*= 1E9 # convert to eV
+    data_muzio_5PeVI3["E_lo"]*=1E9
+    data_muzio_5PeVI3["E_hi"]*=1E9
+    ax.errorbar(data_muzio_5PeVI3["E"], data_muzio_5PeVI3["f"], 
+                xerr=[data_muzio_5PeVI3["E_lo"], data_muzio_5PeVI3["E_hi"]],
+                yerr=[data_muzio_5PeVI3["f_lo"], data_muzio_5PeVI3["f_hi"]],
+                fmt="o", color="blue")
+
 
     ax.plot(rnog_energies, rnog_today, lw=5, color="C1")
     ax.plot(rnog_energies, rnog_2031, lw=5, color="C3")

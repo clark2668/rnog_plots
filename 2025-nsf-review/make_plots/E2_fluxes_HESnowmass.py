@@ -413,7 +413,7 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                     
     if show_ice_cube_HESE_fit:
         ice_cube_hese_range = get_ice_cube_hese_range()
-        heseleg = ax.fill_between(IC_Cascades2020_en / plotUnitsEnergy, *IC_Cascades2020_flux, edgecolor='#5CACE2', facecolor='azure', alpha=0.7, zorder=2, label="Astro: IceCube measurements")
+        heseleg = ax.fill_between(IC_Cascades2020_en / plotUnitsEnergy, *IC_Cascades2020_flux, edgecolor='#5CACE2', facecolor='azure', alpha=0.7, zorder=2, label="Astro: IceCube and KM3NeT measurements")
         legends.append(heseleg)
         #ax.plot(ice_cube_hese_range[0] / plotUnitsEnergy, ice_cube_nu_fit(ice_cube_hese_range[0],
         #                                                                   offset=6.7*flavorRatio, slope=-2.5) * ice_cube_hese_range[0] ** 2 / plotUnitsFlux, color='#5CACE2')
@@ -634,22 +634,34 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
 
     legends.reverse()
 
-    data_transgzk = np.genfromtxt("data/trans_gzk_protons.csv",delimiter=",", names=["energy", "flux"])
-    leg_transgz, = ax.plot(data_transgzk["energy"], data_transgzk["flux"], '-', color="blue", lw=2, alpha=0.65, label = "Trans-GZK Protons")
+    # data_transgzk = np.genfromtxt("data/trans_gzk_protons.csv",delimiter=",", names=["energy", "flux"])
+    # leg_transgz, = ax.plot(data_transgzk["energy"], data_transgzk["flux"], '-', color="blue", lw=2, alpha=0.65, label = "Trans-GZK Protons")
+
+    # muzio best fit stuff
+    # data_muzio_100PeV = np.genfromtxt("data/bestfit_IC_KM3NeTmid_xmaxShift_sibyll_retuneNuSum.txt",
+    #                                 names=["E", "f", "e", "mu", "tau", "low"]
+    #                                 )
+    # ax.plot(10**data_muzio_100PeV["E"], data_muzio_100PeV["f"], color="cyan")
 
     data_pulsars = np.genfromtxt("data/pulsars.csv",delimiter=",", names=["energy", "flux"])
-    leg_pulars, = ax.plot(data_pulsars["energy"], data_pulsars["flux"], '--', color="blue", lw=2, alpha=0.65, label="Pulsars")
+    leg_pulars, = ax.plot(data_pulsars["energy"], data_pulsars["flux"], '-', color="blue", lw=2, alpha=0.65, label="Pulsars")
 
     data_agn = np.genfromtxt("data/agn.csv",delimiter=",", names=["energy", "flux"])
-    leg_agn, = ax.plot(data_agn["energy"], data_agn["flux"], '-.', color="blue", lw=2, alpha=0.65, label="AGN")
+    leg_agn, = ax.plot(data_agn["energy"], data_agn["flux"], '--', color="blue", lw=2, alpha=0.65, label="AGN")
  
     data_bllacs = np.genfromtxt("data/bllacs.csv",delimiter=",", names=["energy", "flux"])
-    leg_bllacs, = ax.plot(data_bllacs["energy"], data_bllacs["flux"], ':', color="blue", lw=2, alpha=0.65, label="BL Lacs")
+    leg_bllacs, = ax.plot(data_bllacs["energy"], data_bllacs["flux"], '-.', color="blue", lw=2, alpha=0.65, label="BL Lacs")
 
-    legends.append(leg_transgz)
+    data_muzio_1EeV = np.genfromtxt("data/bestfit_IC_KM3NeThi_xmaxShift_UHEp_sibyll_retuneNuSum.txt",
+                                    names=["E", "f", "e", "mu", "tau", "low"]
+                                    )
+    leg_muziokm3, = ax.plot(10**data_muzio_1EeV["E"], data_muzio_1EeV["f"], ":", color="blue", lw=2, label=r"CR-$\nu$ Joint Fit")
+
+    # legends.append(leg_transgz)
     legends.append(leg_pulars)
     legends.append(leg_agn)
     legends.append(leg_bllacs)
+    legends.append(leg_muziokm3)
 
     first_legend = plt.legend(handles=legends, loc='lower left', fontsize=legendfontsize, handlelength=3, ncol=2)
     plt.gca().add_artist(first_legend)
