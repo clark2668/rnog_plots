@@ -81,6 +81,7 @@ def get_GZK_Auger_best_fit(energy):
 def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                         diffuse=True,
                         show_ice_cube_EHE_limit=True,
+                        show_ice_cube_EHE_limit_2025=True,
                         show_ice_cube_HESE_data=True,
                         show_ice_cube_HESE_fit=True,
                         show_ice_cube_mu=True,
@@ -285,7 +286,7 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
     #second_legend.append(textleg)       
     if show_trinity:
         trinityleg, = ax.plot(Trinity_energy / plotUnitsEnergy, Trinity_E2F/plotUnitsFlux, linestyle='--', color='#57B155', label='Trinity 18')
-    	#ax.annotate('Trinity x 3',
+        #ax.annotate('Trinity x 3',
         #            xy=(9e6, 1e-9), xycoords='data',
         #            horizontalalignment='left', color='#57B155', rotation=-20, fontsize=1.3*legendfontsize)
         second_legend.append(trinityleg)
@@ -295,29 +296,29 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
         second_legend.append(skaleg)
         
     if show_poemma:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
         poemmaleg, = ax.plot(POEMMA_energy / plotUnitsEnergy, POEMMA / plotUnitsFlux, linestyle="-.", color='#3FA33F', label='POEMMA30 (5 years)')
-    	#ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        #ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
         second_legend.append(poemmaleg)
     
     if show_poemma_fluor:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
         poemmaleg, = ax.plot(POEMMA_fluor_energy / plotUnitsEnergy, POEMMA_fluor_flux / plotUnitsFlux, linestyle="-.", color='#3FA33F')
-    	#ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        #ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
         second_legend.append(poemmaleg)
         
     if show_poemma360:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
         poemma360leg, = ax.plot(POEMMA360_energy / plotUnitsEnergy, POEMMA360 / plotUnitsFlux, linestyle=":", color='#3FA33F', label='POEMMA30(x12) Cherenkov (5 year mission)')
-    	#ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        #ax.annotate('POEMMA 360 (5 years)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
         second_legend.append(poemma360leg)
-    	
+        
     
     #textleg, = ax.plot([],[], ' ', label=r"\textbf{Earth-skimming radio}")
     #second_legend.append(textleg)   
@@ -370,30 +371,36 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                         xy=(2E18 * units.eV / plotUnitsEnergy, 1.5e-6* 3.0 * flavorRatio), xycoords='data',
                         horizontalalignment='left', color='grey', fontsize=labelfontsize, rotation=-60, alpha=0.75)
     if show_pueo30:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
-    	pueo30leg, = ax.plot(PUEO30_energy / plotUnitsEnergy, PUEO30 / plotUnitsFlux, linestyle="--", color='#EA5A06', label='PUEO (1 flight, 30 days)')
-    	#ax.annotate('PUEO 100 days (3 flights)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='#FB3F1A', rotation=15)
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
+        pueo30leg, = ax.plot(PUEO30_energy / plotUnitsEnergy, PUEO30 / plotUnitsFlux, linestyle="--", color='#EA5A06', label='PUEO (1 flight, 30 days)')
+        #ax.annotate('PUEO 100 days (3 flights)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='#FB3F1A', rotation=15)
 
-    	second_legend.append(pueo30leg)
+        second_legend.append(pueo30leg)
     
     if show_pueo100:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
-    	pueo100leg, = ax.plot(PUEO100_energy / plotUnitsEnergy, PUEO100 / plotUnitsFlux, linestyle=(0, (3, 1, 1, 1, 1, 1)), color='#EA5A06', label='PUEO (3 flights, 100 days)')
-    	#ax.annotate('PUEO 100 days (3 flights)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='#FB3F1A', rotation=15)
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
+        pueo100leg, = ax.plot(PUEO100_energy / plotUnitsEnergy, PUEO100 / plotUnitsFlux, linestyle=(0, (3, 1, 1, 1, 1, 1)), color='#EA5A06', label='PUEO (3 flights, 100 days)')
+        #ax.annotate('PUEO 100 days (3 flights)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='#FB3F1A', rotation=15)
 
-    	second_legend.append(pueo100leg)
+        second_legend.append(pueo100leg)
 
-    #textleg, = ax.plot([],[], ' ', label=r"\textbf{In-ice Radio}")  
-    #second_legend.append(textleg) 
-    #second_legend.append(pueo100leg)   
-
+        #textleg, = ax.plot([],[], ' ', label=r"\textbf{In-ice Radio}")  
+        #second_legend.append(textleg) 
+        #second_legend.append(pueo100leg)   
         
     if show_ice_cube_EHE_limit:
         ax.plot(ice_cube_limit[2:, 0] / plotUnitsEnergy, ice_cube_limit[2:, 1] / plotUnitsFlux * flavorRatio, color='grey', linewidth=4, alpha=0.5)
+
+    if show_ice_cube_EHE_limit_2025:
+        ax.plot(ice_cube_limit_25[2:, 0] / plotUnitsEnergy, ice_cube_limit_25[2:, 1] / plotUnitsFlux * flavorRatio, color='grey', linewidth=4, alpha=1)
+        ax.annotate('IceCube',
+                xy=(4e16 * units.eV / plotUnitsEnergy, 1e-9 * 3.0 * flavorRatio), xycoords='data',
+                horizontalalignment='center', color='grey', rotation=5, fontsize=labelfontsize, alpha=1)
+
 
     if show_ice_cube_HESE_data:
         # data points
@@ -413,17 +420,18 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
 
         
         if energyBinsPerDecade == 2:
-            ax.annotate('IceCube',
-                    xy=(3e6 * units.GeV / plotUnitsEnergy, 4e-8), xycoords='data',
-                    horizontalalignment='center', color='grey', rotation=0, fontsize=labelfontsize)
+            flimflam=1
+            # ax.annotate('IceCube',
+            #         xy=(3e6 * units.GeV / plotUnitsEnergy, 4e-8), xycoords='data',
+            #         horizontalalignment='center', color='grey', rotation=0, fontsize=labelfontsize)
         else:
             # ax.annotate('IceCube',
             #         xy=(10e15 * units.eV / plotUnitsEnergy, 4.5e-9 * 3.0 * flavorRatio), xycoords='data',
             #         horizontalalignment='center', color='grey', rotation=20, fontsize=labelfontsize)
-
-            ax.annotate('IceCube',
-                    xy=(4e16 * units.eV / plotUnitsEnergy, 7.2e-9 * 3.0 * flavorRatio), xycoords='data',
-                    horizontalalignment='center', color='grey', rotation=5, fontsize=labelfontsize, alpha=0.75)
+            flimflam=1
+            # ax.annotate('IceCube',
+            #         xy=(4e16 * units.eV / plotUnitsEnergy, 7.2e-9 * 3.0 * flavorRatio), xycoords='data',
+            #         horizontalalignment='center', color='grey', rotation=5, fontsize=labelfontsize, alpha=0.75)
 
     if show_ice_cube_mu:
         # mu fit
@@ -474,13 +482,13 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
  
 
     if show_eusospb:
-    	#ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
-    	#ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
-    	
+        #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
+        #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
+        
         eusospbleg, = ax.plot(EUSOSPB_energy / plotUnitsEnergy, EUSOSPB / plotUnitsFlux, linestyle=(0, (3, 1, 1, 1, 1, 1)), color='#389237', label='EUSO-SPB (1 flight, 100 days)')
-    	#ax.annotate('EUSO SBP (100 days, 1 flight)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='black', rotation=15)
+        #ax.annotate('EUSO SBP (100 days, 1 flight)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='black', rotation=15)
         second_legend.append(eusospbleg)
-    	
+        
     if show_auger_limit:
         augerleg, = ax.plot(auger_limit[:, 0] / plotUnitsEnergy, auger_limit[:, 1] / plotUnitsFlux, color='grey', linewidth=4, alpha=0.5)
         if energyBinsPerDecade == 2:
@@ -489,7 +497,7 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                         horizontalalignment='left', color='grey', rotation=0, fontsize=labelfontsize)
         else:
             ax.annotate('Auger',
-                        xy=(1.2e17 * units.eV / plotUnitsEnergy, 3.3e-8* 3.0 * flavorRatio), xycoords='data',
+                        xy=(1.2e17 * units.eV / plotUnitsEnergy, 1.3e-8* 3.0 * flavorRatio), xycoords='data',
                         horizontalalignment='right', color='grey', rotation=-50,fontsize=labelfontsize, alpha=0.75)
         second_legend.append(augerleg)
         

@@ -292,6 +292,26 @@ ice_cube_limit[:, 0] = 10 ** ice_cube_limit[:, 0] * units.GeV
 ice_cube_limit[:, 1] = 10 ** ice_cube_limit[:, 1] * (units.GeV * units.cm ** -2 * units.second ** -1 * units.sr ** -1)
 ice_cube_limit[:, 1] *= energyBinsPerDecade
 
+# IceCube
+# 2025 EHE paper. Data available at  https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/JHK49D
+ice_cube_limit_25 = np.array(([
+(3162000,0.000000007011),
+(10000000,0.000000009136),
+(31620000,0.000000005377),
+(100000000,0.000000005743),
+(316200000,0.000000007535),
+(1000000000,0.00000001147),
+(3162000000,0.00000001978),
+(10000000000,0.00000003713),
+(31620000000,0.00000007529),
+(100000000000,0.0000002201)
+]))
+
+ice_cube_limit_25[:, 0] = ice_cube_limit_25[:, 0] * units.GeV
+ice_cube_limit_25[:, 1] = ice_cube_limit_25[:, 1] * (units.GeV * units.cm ** -2 * units.second ** -1 * units.sr ** -1)
+ice_cube_limit_25[:, 1] *= energyBinsPerDecade
+
+
 # Fig. 2 from PoS ICRC2017 (2018) 981
 # IceCube preliminary, per flavor flux
 # E (GeV); E^2 dN/dE (GeV cm^-2 s-1 sr-1); yerror down; yerror up

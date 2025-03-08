@@ -67,52 +67,54 @@ fig, axs = plt.subplots(1, 1, figsize=(8, 8))
 second_axs = []     
 for i in range(0,1):
     fig, ax = nuplot.get_E2_limit_figure(fig=fig, ax=axs,show_model_legend=True,
-                                      diffuse=DIFFUSE,
-                                                              show_ice_cube_EHE_limit=i in show_icecube_uhe,
-                                                              show_ice_cube_HESE_data=False,
-                                                              show_ice_cube_HESE_fit=i in show_icecube,
-                                                              show_ice_cube_mu=i in show_icecube,
-                                                              nu_mu_show_data_points=False,
-                                                              show_ice_cube_mu_extrap=False,
-                                                              show_icecube_glashow=False,
-                                                              show_anita_I_III_limit=False,
-                                                                show_anita_I_IV_limit=i in show_anita,
-                                                              show_pueo30=False,
-                                                              show_pueo100=i in show_pueo,
-                                                              show_poemma=i in show_poemma,
-                                                              show_poemma360=False,
-                                                              show_poemma_fluor=i in show_poemma,
-                                                              show_eusospb=False,
-                                                              show_auger_limit=i in show_auger,
-                                                              show_ara=i in show_ara,
-                                                              show_ara_2023=False,
-                                                              show_ara_2023_TL=False,
-                                                              show_arianna=i in show_arianna,
-                                                              show_grand_10k=False,
-                                                              show_grand_200k=i in show_grand,
-                                                              show_beacon=i in show_beacon,
-                                                              show_taroge=False,
-                                                              show_tambo=i in show_tambo,
-                                                              show_trinity=i in show_trinity,
-                                                              show_ska=False,
-                                                              show_radar=i in show_radar,
-                                                              show_RNOG=i in show_rnog,
-                                                              show_IceCubeGen2_whitepaper=False,
-                                                              show_IceCubeGen2_ICRC2021=False,
-                                                              show_IceCubeGen2_combo=i in show_gen2,
-                                                              show_IceCubeGen2_proj=False,
-                                                              show_ara_1year=False,
-                                                              show_prediction_arianna_200=False,
-                                                              show_Heinze=False,
-                                                              show_Auger_vanvliet=True,
-                                                              show_TA=False,
-                                                              show_TA_nominal=False,
-                                                              show_TA_ICRC2021=False,
-                                                              show_neutrino_best_fit=False,
-                                                              show_neutrino_best_case=False,
-                                                              show_neutrino_worst_case=False,
-                                                              show_muf_bestfit=True,
-                                                              show_astro=True)
+    diffuse=DIFFUSE,
+    #   show_ice_cube_EHE_limit=i in show_icecube_uhe,
+    show_ice_cube_EHE_limit=False,
+    show_ice_cube_EHE_limit_2025=True,
+    show_ice_cube_HESE_data=False,
+    show_ice_cube_HESE_fit=i in show_icecube,
+    show_ice_cube_mu=i in show_icecube,
+    nu_mu_show_data_points=False,
+    show_ice_cube_mu_extrap=False,
+    show_icecube_glashow=False,
+    show_anita_I_III_limit=False,
+    show_anita_I_IV_limit=i in show_anita,
+    show_pueo30=False,
+    show_pueo100=i in show_pueo,
+    show_poemma=i in show_poemma,
+    show_poemma360=False,
+    show_poemma_fluor=i in show_poemma,
+    show_eusospb=False,
+    show_auger_limit=i in show_auger,
+    show_ara=i in show_ara,
+    show_ara_2023=False,
+    show_ara_2023_TL=False,
+    show_arianna=i in show_arianna,
+    show_grand_10k=False,
+    show_grand_200k=i in show_grand,
+    show_beacon=i in show_beacon,
+    show_taroge=False,
+    show_tambo=i in show_tambo,
+    show_trinity=i in show_trinity,
+    show_ska=False,
+    show_radar=i in show_radar,
+    show_RNOG=i in show_rnog,
+    show_IceCubeGen2_whitepaper=False,
+    show_IceCubeGen2_ICRC2021=False,
+    show_IceCubeGen2_combo=i in show_gen2,
+    show_IceCubeGen2_proj=False,
+    show_ara_1year=False,
+    show_prediction_arianna_200=False,
+    show_Heinze=False,
+    show_Auger_vanvliet=True,
+    show_TA=False,
+    show_TA_nominal=False,
+    show_TA_ICRC2021=False,
+    show_neutrino_best_fit=False,
+    show_neutrino_best_case=False,
+    show_neutrino_worst_case=False,
+    show_muf_bestfit=True,
+    show_astro=True)
     
 
     import numpy as np
@@ -199,6 +201,23 @@ for i in range(0,1):
                 horizontalalignment='left', color='grey', fontsize=14, rotation=-40)
 
 
+    # the km3net event
+    # from this data release notebook
+    # https://github.com/KM3NeT/KM3-230213A-data/blob/main/notebooks/Astrophysical%20flux%20comparisons.ipynb
+    energy5_evt, energy50_evt, energy95_evt = 7.24e7*1E9, 2.18e8*1E9, 2.57e9*1E9
+    flux_arca = 3*5.80e-08
+    flux_lo = 3*2.13e-08
+    flux_hi = 3*1.59e-07
+    eb = ax.errorbar([energy50_evt], [flux_arca],
+        xerr = [[energy50_evt-energy5_evt], [energy95_evt-energy50_evt]],
+        yerr = [[flux_arca-flux_lo], [flux_hi-flux_arca]],
+        color="grey", lw=3, alpha=0.5
+        )
+    eb[-1][0].set_linestyle('-.')
+    eb[-1][1].set_linestyle('-.')
+    ax.annotate('KM3NeT',
+        xy=(2.2e17 * units.eV / plotUnitsEnergy, 7.3e-8* 3.0 * flavorRatio), xycoords='data',
+        horizontalalignment='right', color='grey', rotation=-50,fontsize=14, alpha=0.75)
 
     # handles = [leg_transgz, leg_pulars, leg_agn, leg_bllacs]
 
@@ -207,7 +226,6 @@ for i in range(0,1):
     ax.plot(rnog_energies, rnog_today, lw=5, color="C1")
     ax.plot(rnog_energies, rnog_2031, lw=5, color="C3")
     ax.plot(rnog_energies, rnog_2040, lw=5, color="black")
-
 
 
     axs.set_yscale('log')
@@ -261,7 +279,6 @@ axs.annotate('RNO-G-35 2040',
                     horizontalalignment='center', color='black', rotation=-10, fontsize=25,
                     path_effects=[pe.withStroke(linewidth=4, foreground="white")]
                     )
-
 
 
 
