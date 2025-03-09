@@ -368,8 +368,8 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                         horizontalalignment='left', color='grey', fontsize=legendfontsize)
         else:
             ax.annotate('ANITA I-IV',
-                        xy=(2E18 * units.eV / plotUnitsEnergy, 1.5e-6* 3.0 * flavorRatio), xycoords='data',
-                        horizontalalignment='left', color='grey', fontsize=labelfontsize, rotation=-60, alpha=0.75)
+                        xy=(2E18 * units.eV / plotUnitsEnergy, 1.2e-6* 3.0 * flavorRatio), xycoords='data',
+                        horizontalalignment='left', color='grey', fontsize=labelfontsize, rotation=-55, alpha=0.75)
     if show_pueo30:
         #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
         #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
@@ -408,7 +408,23 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
         uplimit[np.where(ice_cube_hese[:, 3] == 0)] = 1
         uplimit[np.where(ice_cube_hese[:, 3] != 0.)] = 0
 
-        ax.errorbar(ice_cube_hese[:, 0] / plotUnitsEnergy, ice_cube_hese[:, 1] / plotUnitsFlux, yerr=ice_cube_hese[:, 2:].T / plotUnitsFlux, uplims=uplimit, color='#5CACE2', marker='o', markersize=4, ecolor='#5CACE2', linestyle='None', zorder=3)
+        the_x_errs = np.diff(ice_cube_hese[:, 0]/2)
+        # For plotting, we need to pad the array to match the length of 'a'
+        the_x_errs = np.insert(the_x_errs, 0, the_x_errs[0])  # Duplicate first value for same length
+
+
+        heseleg = ax.errorbar(ice_cube_hese[:, 0] / plotUnitsEnergy, 
+                              ice_cube_hese[:, 1] / plotUnitsFlux, 
+                              yerr=ice_cube_hese[:, 2:].T / plotUnitsFlux, 
+                              uplims=uplimit, 
+                              xerr=the_x_errs,
+                              # color='#5CACE2', 
+                              color="purple", alpha=0.5,
+                              marker='o', markersize=4, ecolor='purple', linestyle='None', zorder=3,
+                              label="Astro: IceCube and KM3NeT measurements"
+                    )
+
+        legends.append(heseleg)
 
                     
     if show_ice_cube_HESE_fit:
@@ -448,10 +464,14 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                     xy=(4e4 * units.GeV / plotUnitsEnergy, 5), xycoords='data',
                     horizontalalignment='center', color='grey', rotation=0, fontsize=legendfontsize)
 
-        if nu_mu_show_data_points:
+        uplimit = np.copy(nu_mu_data[:, 3])
+        uplimit[np.where(nu_mu_data[:, 3] == 0)] = 1
+        uplimit[np.where(nu_mu_data[:, 3] != 0.)] = 0
+
+        if nu_mu_show_data_points:            
             ax.errorbar(nu_mu_data[:, 0] / plotUnitsEnergy, nu_mu_data[:, 1] / plotUnitsFlux,
-                        yerr=nu_mu_data[:, 2:].T / plotUnitsFlux, uplims=uplimit, color='grey',
-                        marker='o', ecolor='grey', linestyle='None', zorder=3,
+                        yerr=nu_mu_data[:, 2:].T / plotUnitsFlux, uplims=uplimit, color='purple',
+                        alpha=0.5, marker='o', ecolor='purple', linestyle='None', zorder=3,
                         markersize=7)
                         
     if show_ice_cube_mu_extrap:
@@ -460,10 +480,6 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
         plt.plot(energy_placeholder / plotUnitsEnergy,
                  ice_cube_nu_fit(energy_placeholder) * energy_placeholder ** 2 / plotUnitsFlux,
                  color='#5CACE2', linestyle=':')
-
-        uplimit = np.copy(nu_mu_data[:, 3])
-        uplimit[np.where(nu_mu_data[:, 3] == 0)] = 1
-        uplimit[np.where(nu_mu_data[:, 3] != 0.)] = 0
 
 
     if show_icecube_glashow:
@@ -498,7 +514,7 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
         else:
             ax.annotate('Auger',
                         xy=(1.2e17 * units.eV / plotUnitsEnergy, 1.3e-8* 3.0 * flavorRatio), xycoords='data',
-                        horizontalalignment='right', color='grey', rotation=-50,fontsize=labelfontsize, alpha=0.75)
+                        horizontalalignment='right', color='grey', rotation=-45,fontsize=labelfontsize, alpha=0.75)
         second_legend.append(augerleg)
         
     if show_ara_1year:

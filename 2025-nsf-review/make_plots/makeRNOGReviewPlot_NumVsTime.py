@@ -116,6 +116,20 @@ def get_flux(resource_name, energy_vals_logeV):
         energy_vals_eV = np.power(10., energy_vals_logeV)
         energy_vals_GeV = energy_vals_eV/1E9
         flux = flux/energy_vals_GeV/energy_vals_eV
+    elif(resource_name=='crnu'):
+        data_muzio_1EeV = np.genfromtxt("data/bestfit_IC_KM3NeThi_xmaxShift_UHEp_sibyll_retuneNuSum.txt",
+                                    names=["energy", "flux", "e", "mu", "tau", "low"]
+                                    )
+        loge = data_muzio_1EeV["energy"] # original data is logeV
+        flux = np.log10(data_muzio_1EeV["flux"]) # original data is GeV/cm2/s/sr
+        print(flux)
+        interp = interpolate.Akima1DInterpolator( loge, flux, method="makima")
+        interp.extrapolate = False
+        flux = np.power(10.,interp(energy_vals_logeV)) # 10 ^ (output of spline), to get back to GeV/cm2/s/sr
+        flux = np.nan_to_num(flux) # convert nans to zeros
+        energy_vals_eV = np.power(10., energy_vals_logeV)
+        energy_vals_GeV = energy_vals_eV/1E9
+        flux = flux/energy_vals_GeV/energy_vals_eV
     return flux
 
 def beautify_counts(this_ax):
@@ -177,8 +191,10 @@ data = {2024: np.asarray([ 8.591e+20,  8.472e+21,  4.895e+22,  2.069e+23,  6.410
 logeV = np.log10(energies)
 num_vs_time = {}
 
-models = ["transgzk", "pulsars", "agn", "bllacs"]
-labels = {"transgzk": "Trans GZK Protons", "pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs"}
+# models = ["transgzk", "pulsars", "agn", "bllacs"]
+models = ["pulsars", "agn", "bllacs", "crnu"]
+# labels = {"transgzk": "Trans GZK Protons", "pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs"}
+labels = {"pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs", "crnu": r"CR+$\nu$ Joint Fit"}
 for model in models:
     num_events = {}
     for y in data.keys():
@@ -249,11 +265,11 @@ ax_ratevstime.axvspan(LIGO_04_start,LIGO_04_end,color='blueviolet',alpha=0.2)
 ax_ratevstime.axvspan(LIGO_05_start,LIGO_05_end,color='violet',alpha=0.2)
 
 ax_ratevstime.annotate('LVK\nO4', weight='bold',
-            xy=(2023.8,100), xycoords='data',
+            xy=(2023.8,22), xycoords='data',
             horizontalalignment='center', color='blueviolet', rotation=0, fontsize=14)
 
 ax_ratevstime.annotate('LVK\nO5', weight='bold',
-            xy=(2027.5,100), xycoords='data',
+            xy=(2027.5,22), xycoords='data',
             horizontalalignment='center', color='violet', rotation=0, fontsize=14)
 
 
@@ -261,14 +277,14 @@ ax_ratevstime.annotate('LVK\nO5', weight='bold',
 
 import matplotlib.patches as mpatches
 
-arr = mpatches.FancyArrowPatch((2025, 400), (2028, 400),
+arr = mpatches.FancyArrowPatch((2025, 12), (2028, 12),
                                arrowstyle="->,head_width=.30",
                                mutation_scale=20,
                                color="C1", lw=2,
                                )
 ax_ratevstime.add_patch(arr)
-ax_ratevstime.annotate(f"VRO", (2025, 450), ha="left", va="bottom", color="C1", fontsize=15)
-ax_ratevstime.set_ylim([0.02, 900])
+ax_ratevstime.annotate(f"VRO", (2025, 13), ha="left", va="bottom", color="C1", fontsize=15)
+ax_ratevstime.set_ylim([0.02, 50])
 
 ax_ratevstime.grid()
 

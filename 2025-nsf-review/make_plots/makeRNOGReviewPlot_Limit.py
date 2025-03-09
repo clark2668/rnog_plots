@@ -45,8 +45,8 @@ def axtrans(x, ax, bx):
 
 
 # identify which subplot to include
-show_icecube = [0]
-show_icecube_uhe = [0]
+show_icecube = [1]
+show_icecube_uhe = [1]
 show_anita = [0]
 show_pueo = [1]
 show_poemma = [1]
@@ -71,7 +71,7 @@ for i in range(0,1):
     #   show_ice_cube_EHE_limit=i in show_icecube_uhe,
     show_ice_cube_EHE_limit=False,
     show_ice_cube_EHE_limit_2025=True,
-    show_ice_cube_HESE_data=False,
+    show_ice_cube_HESE_data=True,
     show_ice_cube_HESE_fit=i in show_icecube,
     show_ice_cube_mu=i in show_icecube,
     nu_mu_show_data_points=False,
@@ -171,28 +171,31 @@ for i in range(0,1):
 
     axs.fill_between(energy_fang, flux_fang*1E-10, flux_fang, color='#6baed6')
 
-    # # ara
-    # ara_energies = np.asarray([1.02E+07, 3.19E+07, 1.01E+08, 3.35E+08, 1.09E+09,
-    #                            3.10E+09, 1.05E+10, 3.12E+10, 1.08E+11, 3.34E+11, 9.30E+11])
-    # ara_ses = np.asarray([5.75E-13, 2.87E-14, 2.43E-15, 3.01E-16, 6.00E-17,
-    #                       1.78E-17, 5.23E-18, 2.20E-18, 9.26E-19, 4.57E-19, 2.80E-19]) * ara_energies # make E2
-    # ara_energies *= 1E9 # convert to eV for our plot
-    # ax.plot(ara_energies, ara_ses, color="grey", alpha=0.5, linewidth=4)
-    # ax.annotate('ARA-5',
-    #             xy=(1.5E16 * units.eV / plotUnitsEnergy, 0.5e-6* 3.0 * flavorRatio), xycoords='data',
-    #             horizontalalignment='left', color='grey', fontsize=14, rotation=-60, alpha=0.75)
+    which_timeline  = "now"
+    # which_timeline = "future"
+    if which_timeline is "future":
+        # ara
+        ara_energies = np.asarray([1.02E+07, 3.19E+07, 1.01E+08, 3.35E+08, 1.09E+09,
+                                3.10E+09, 1.05E+10, 3.12E+10, 1.08E+11, 3.34E+11, 9.30E+11])
+        ara_ses = np.asarray([5.75E-13, 2.87E-14, 2.43E-15, 3.01E-16, 6.00E-17,
+                            1.78E-17, 5.23E-18, 2.20E-18, 9.26E-19, 4.57E-19, 2.80E-19]) * ara_energies # make E2
+        ara_energies *= 1E9 # convert to eV for our plot
+        ax.plot(ara_energies, ara_ses, color="grey", alpha=0.5, linewidth=4, ls="--")
+        ax.annotate('ARA-5 Proj.',
+                    xy=(1.5E16 * units.eV / plotUnitsEnergy, 2.5e-7* 3.0 * flavorRatio), xycoords='data',
+                    horizontalalignment='left', color='grey', fontsize=14, rotation=-45, alpha=0.75)
 
 
 
-    # # gen2 
-    # gen2_energies = np.asarray([1.06E+07, 3.56E+07, 1.10E+08, 4.53E+08, 1.47E+09,
-    #                             3.84E+09, 1.20E+10, 3.50E+10, 7.87E+10]) * 1E9 # to eV
-    # gen2_limit = np.asarray([2.18E-09, 6.99E-10, 3.46E-10, 2.60E-10, 2.81E-10,
-    #                          3.21E-10, 4.19E-10, 5.78E-10, 7.69E-10])
-    # ax.plot(gen2_energies, gen2_limit, color="grey",linewidth=4)
-    # ax.annotate('Gen2',
-    #             xy=(1.3E16 * units.eV / plotUnitsEnergy, 0.4e-9* 3.0 * flavorRatio), xycoords='data',
-    #             horizontalalignment='left', color='grey', fontsize=14, rotation=-40)
+        # gen2 
+        gen2_energies = np.asarray([1.06E+07, 3.56E+07, 1.10E+08, 4.53E+08, 1.47E+09,
+                                    3.84E+09, 1.20E+10, 3.50E+10, 7.87E+10]) * 1E9 # to eV
+        gen2_limit = np.asarray([2.18E-09, 6.99E-10, 3.46E-10, 2.60E-10, 2.81E-10,
+                                3.21E-10, 4.19E-10, 5.78E-10, 7.69E-10])
+        ax.plot(gen2_energies, gen2_limit, color="grey",linewidth=4, ls='--')
+        ax.annotate('Gen2 Proj.',
+                    xy=(3E16 * units.eV / plotUnitsEnergy, 0.15e-9* 3.0 * flavorRatio), xycoords='data',
+                    horizontalalignment='left', color='grey', fontsize=14, rotation=-30)
 
 
     # the km3net event
@@ -205,10 +208,11 @@ for i in range(0,1):
     eb = ax.errorbar([energy50_evt], [flux_arca],
         xerr = [[energy50_evt-energy5_evt], [energy95_evt-energy50_evt]],
         yerr = [[flux_arca-flux_lo], [flux_hi-flux_arca]],
-        color='#5CACE2', lw=3, alpha=0.5
+        # color='#5CACE2', lw=3, alpha=0.5
+        color="purple", alpha=0.5, lw=3, fmt="o"
         )
-    eb[-1][0].set_linestyle('-.')
-    eb[-1][1].set_linestyle('-.')
+    # eb[-1][0].set_linestyle('-.')
+    # eb[-1][1].set_linestyle('-.')
     # ax.annotate('KM3NeT',
     #     xy=(2.2e17 * units.eV / plotUnitsEnergy, 7.3e-8* 3.0 * flavorRatio), xycoords='data',
     #     horizontalalignment='right', color='#5CACE2', rotation=-50,fontsize=14, alpha=0.75)
@@ -227,7 +231,17 @@ for i in range(0,1):
     ax.errorbar(data_muzio_5PeVI3["E"], data_muzio_5PeVI3["f"], 
                 xerr=[data_muzio_5PeVI3["E_lo"], data_muzio_5PeVI3["E_hi"]],
                 yerr=[data_muzio_5PeVI3["f_lo"], data_muzio_5PeVI3["f_hi"]],
-                fmt="o", color="blue")
+                fmt="o", color="purple", alpha=0.5)
+
+    # # icecube hese
+    # energy, flux, err_min, err_max = nuplot.get_data('experiments/ice_cube_hese.txt')
+    # uplimit = err_max-flux
+    # uplimit[np.where(err_max-flux == 0)] = 1
+    # uplimit[np.where(err_max-flux != 0)] = 0
+
+    # ax.errorbar(energy, flux*3,
+    #                     yerr=np.asarray([flux-err_min, err_max-flux])*3, uplims=uplimit,
+    #                     color='dodgerblue', marker='o', ecolor='dodgerblue', linestyle='None')
 
 
     ax.plot(rnog_energies, rnog_today, lw=5, color="C1")
@@ -297,14 +311,14 @@ fig.tight_layout()
 #labels = add_limit(ax, labels, veff[:, 0], veff[:, 1], n_stations=1000, livetime=5 * units.year, label=veff_label)
 #plt.legend(handles=labels, loc=2)
 if DIFFUSE:
-    name_plot = "Limit_diffuse_single.png"
+    name_plot = f"Limit_diffuse_single_{which_timeline}.png"
 else:
-    name_plot = "Limit_sources.png"
+    name_plot = f"Limit_sources_{which_timeline}.png"
 plt.savefig(name_plot)
 
 if DIFFUSE:
-    name_plot = "Limit_diffuse_single.pdf"
+    name_plot = f"Limit_diffuse_single_{which_timeline}.pdf"
 else:
-    name_plot = "Limit_sources.pdf"
+    name_plot = f"Limit_sources_{which_timeline}.pdf"
 plt.savefig(name_plot)
 plt.show()

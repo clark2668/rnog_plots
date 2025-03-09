@@ -3,7 +3,7 @@
 This makes the plots for the NSF strategic review.
 Particularly the following two plots:
 
-<img src="make_plots/Limit_diffuse_single.png" alt="Alt Text" width="400" height="300">
+<img src="make_plots/Limit_diffuse_single_future.png" alt="Alt Text" width="400" height="300">
 <img src="make_plots/num_vs_time.png" alt="Alt Text" width="400" height="300">
 
 The first thing you need to do is compute the exposure of the instrument.
