@@ -71,7 +71,17 @@ def get_flux(resource_name, energy_vals_logeV):
         def icecube_marco(E):
             return 4.32 * ((E/1.e14)**-2.37) * 1e-27
         flux = icecube_marco(np.power(10.,energy_vals_logeV))
-        print(flux)
+    elif(resource_name=='km3net'):
+        def km3net(E):
+            return 3 * 5.8 * ((E/2.18E17)**-2) * 1E-8 # GeV/cm2/s/sr
+        energy_vals_eV = np.power(10.,energy_vals_logeV)
+        energy_vals_GeV = energy_vals_eV/1E9
+        flux = km3net(energy_vals_eV)
+        low_mask = energy_vals_eV < 72E15
+        flux[low_mask] = 0
+        high_mask = energy_vals_eV > 2.6E18
+        flux[high_mask] = 0
+        return flux/energy_vals_GeV/energy_vals_eV
     elif(resource_name=='transgzk'):
         data_transgzk = np.genfromtxt("data/trans_gzk_protons.csv",delimiter=",", names=["energy", "flux"])
         loge_transgzk = np.log10(data_transgzk["energy"]) # original data is eV
@@ -122,7 +132,6 @@ def get_flux(resource_name, energy_vals_logeV):
                                     )
         loge = data_muzio_1EeV["energy"] # original data is logeV
         flux = np.log10(data_muzio_1EeV["flux"]) # original data is GeV/cm2/s/sr
-        print(flux)
         interp = interpolate.Akima1DInterpolator( loge, flux, method="makima")
         interp.extrapolate = False
         flux = np.power(10.,interp(energy_vals_logeV)) # 10 ^ (output of spline), to get back to GeV/cm2/s/sr
@@ -192,9 +201,10 @@ logeV = np.log10(energies)
 num_vs_time = {}
 
 # models = ["transgzk", "pulsars", "agn", "bllacs"]
-models = ["pulsars", "agn", "bllacs", "crnu"]
+models = ["km3net", "pulsars", "agn", "bllacs", "crnu"]
+# models = ["km3net"]
 # labels = {"transgzk": "Trans GZK Protons", "pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs"}
-labels = {"pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs", "crnu": r"CR+$\nu$ Joint Fit"}
+labels = {"km3net" : "KM3Net", "pulsars": "Pulsars", "agn": "AGN", "bllacs": "BLLacs", "crnu": r"CR+$\nu$ Joint Fit"}
 for model in models:
     num_events = {}
     for y in data.keys():
@@ -223,14 +233,14 @@ for model in models:
         n, bins, patches= ax_counts.hist(energy_bins,
                                             bins=np.power(10.,np.arange(15,22,0.5)),
                                             weights=counts,
-                                            label=r'IceCube Thru-Mu E$^{-2.19}$: %.2f'%counts.sum(),
+                                            label=f'{model}: %.2f'%counts.sum(),
                                             fill=False, 
                                             stacked=True, 
                                             histtype='step', 
                                             edgecolor='blue',
                                             linewidth=4)
-        # beautify_counts(ax_counts)
-        # fig.savefig(f"example_{y}.png",edgecolor='none',bbox_inches="tight") #save the figure
+        beautify_counts(ax_counts)
+        fig.savefig(f"example_{y}.png",edgecolor='none',bbox_inches="tight") #save the figure
 
         num_events[y] = n.sum()
     num_vs_time[model] = num_events
@@ -284,7 +294,7 @@ arr = mpatches.FancyArrowPatch((2025, 12), (2028, 12),
                                )
 ax_ratevstime.add_patch(arr)
 ax_ratevstime.annotate(f"VRO", (2025, 13), ha="left", va="bottom", color="C1", fontsize=15)
-ax_ratevstime.set_ylim([0.02, 50])
+# ax_ratevstime.set_ylim([0.02, 50])
 
 ax_ratevstime.grid()
 
