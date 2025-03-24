@@ -374,8 +374,15 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
         #ax.plot(PUEO_energy / plotUnitsEnergy, PUEO / plotUnitsFlux, linestyle="--", color='goldenrod')
         #ax.annotate('PUEO 30 days',xy=(1.5e11, 4.e-8), xycoords='data',horizontalalignment='left', color='goldenrod', rotation=15)
         
-        pueo30leg, = ax.plot(PUEO30_energy / plotUnitsEnergy, PUEO30 / plotUnitsFlux, linestyle="--", color='#EA5A06', label='PUEO (1 flight, 30 days)')
+        pueo30leg, = ax.plot(PUEO30_energy / plotUnitsEnergy, PUEO30 / plotUnitsFlux, linestyle="--", color='green', label='PUEO (1 flight, 30 days)')
         #ax.annotate('PUEO 100 days (3 flights)',xy=(1.5e11, 1.5e-8), xycoords='data',horizontalalignment='left', color='#FB3F1A', rotation=15)
+
+        ax.annotate('PUEO',
+                            xy=(3.4E19, 3.4E-8), xycoords='data',
+                            horizontalalignment='left', color='green', rotation=0, fontsize=15,
+                            )
+
+
 
         second_legend.append(pueo30leg)
     
