@@ -17,14 +17,15 @@ import fluxes
 import os
 import E2_fluxes_HESnowmass as nuplot
 
-rnog_energies = np.asarray([ 3.162e+07,  1.000e+08,  3.162e+08,  1.000e+09,  3.162e+09,
-        1.000e+10,  3.162e+10,  1.000e+11]) * 1E9
-rnog_today = np.asarray([ 6.792e-06,  1.409e-06,  5.108e-07,  2.584e-07,  1.814e-07,
-        1.619e-07,  1.325e-07,  1.691e-07])
-rnog_2031 = np.asarray([ 4.749e-08,  1.466e-08,  7.729e-09,  5.169e-09,  4.133e-09,
-        4.324e-09,  4.378e-09,  5.757e-09])
-rnog_2040 = np.asarray([ 1.552e-08,  4.823e-09,  2.566e-09,  1.735e-09,  1.394e-09,
-        1.467e-09,  1.496e-09,  1.973e-09])
+rnog_energies = np.asarray([ 1.000e+07,  3.162e+07,  1.000e+08,  3.162e+08,  1.000e+09,
+        3.162e+09,  1.000e+10,  3.162e+10,  1.000e+11,  3.162e+11,
+        1.000e+12]) * 1E9
+rnog_today = np.asarray([ 2.954e-06,  6.028e-07,  1.638e-07,  6.512e-08,  3.791e-08,
+        2.714e-08,  2.232e-08,  1.931e-08,  2.414e-08,  2.931e-08,
+        4.608e-08])
+rnog_2040 = np.asarray([ 1.387e-07,  3.067e-08,  8.184e-09,  3.443e-09,  2.119e-09,
+        1.577e-09,  1.330e-09,  1.197e-09,  1.526e-09,  1.913e-09,
+        3.137e-09])
 
 
 # YOU NEED TO CHANGE THIS IN E2_fluxes_NuTauSnowmass,
@@ -79,7 +80,7 @@ for i in range(0,1):
     show_icecube_glashow=False,
     show_anita_I_III_limit=False,
     show_anita_I_IV_limit=i in show_anita,
-    show_pueo30=True,
+    show_pueo30=False,
     show_pueo100=i in show_pueo,
     show_poemma=i in show_poemma,
     show_poemma360=False,
@@ -113,7 +114,7 @@ for i in range(0,1):
     show_neutrino_best_fit=False,
     show_neutrino_best_case=False,
     show_neutrino_worst_case=False,
-    show_muf_bestfit=True,
+    show_muf_bestfit=False, # muzio pure proton
     show_astro=True)
     
 
@@ -209,7 +210,7 @@ for i in range(0,1):
         xerr = [[energy50_evt-energy5_evt], [energy95_evt-energy50_evt]],
         yerr = [[flux_arca-flux_lo], [flux_hi-flux_arca]],
         # color='#5CACE2', lw=3, alpha=0.5
-        color="purple", alpha=0.5, lw=3, fmt="o"
+        color="C1", alpha=0.7, lw=3, fmt="o"
         )
     # eb[-1][0].set_linestyle('-.')
     # eb[-1][1].set_linestyle('-.')
@@ -244,8 +245,8 @@ for i in range(0,1):
     #                     color='dodgerblue', marker='o', ecolor='dodgerblue', linestyle='None')
 
 
-    ax.plot(rnog_energies, rnog_today, lw=5, color="C1")
-    ax.plot(rnog_energies, rnog_2031, lw=5, color="C3")
+    ax.plot(rnog_energies, rnog_today, lw=5, color="firebrick")
+    # ax.plot(rnog_energies, rnog_2031, lw=5, color="C3")
     ax.plot(rnog_energies, rnog_2040, lw=5, color="black")
 
 
@@ -283,20 +284,20 @@ for i in range(0,1):
 import matplotlib.patheffects as pe
 
 axs.annotate('RNO-G-8',
-                    xy=(2.5e9*1E9, 1.8E-7), xycoords='data',
-                    horizontalalignment='center', color='C1', rotation=-20, fontsize=25,
-                    path_effects=[pe.withStroke(linewidth=4, foreground="white")]
-                    )
-
-axs.annotate('RNO-G-35 2031',
-                    xy=(2e9*1E9, 5E-9), xycoords='data',
+                    xy=(2.5e9*1E9, 0.7E-7), xycoords='data',
                     horizontalalignment='center', color='firebrick', rotation=-10, fontsize=25,
                     path_effects=[pe.withStroke(linewidth=4, foreground="white")]
                     )
 
+# axs.annotate('RNO-G-35 2031',
+#                     xy=(2e9*1E9, 5E-9), xycoords='data',
+#                     horizontalalignment='center', color='firebrick', rotation=-10, fontsize=25,
+#                     path_effects=[pe.withStroke(linewidth=4, foreground="white")]
+#                     )
+
 
 axs.annotate('RNO-G-35 2040',
-                    xy=(2e9*1E9, 1.5E-9), xycoords='data',
+                    xy=(2e9*1E9, 1.9E-9), xycoords='data',
                     horizontalalignment='center', color='black', rotation=-10, fontsize=25,
                     path_effects=[pe.withStroke(linewidth=4, foreground="white")]
                     )
