@@ -1,0 +1,16 @@
+# Source: ANITA I-IV, https://arxiv.org/abs/1902.04005, scaled by 4/LN(10) to fix binning
+# Data type: Upper limit
+# Energy bins per decade: 1
+# Column values:
+# Energy [eV]
+# Flux [eV cm^-2 s^-1 sr^-1]
+# Flux band minimum
+# Flux band maximum
+
+1.000e+18 52758.09 0.0 0.0
+3.162e+18 6305.91 0.0 0.0
+1.000e+19 1043.00 0.0 0.0
+3.162e+19 429.39 0.0 0.0
+1.000e+20 248.07 0.0 0.0
+3.162e+20 265.47 0.0 0.0
+1.000e+21 348.48 0.0 0.0
