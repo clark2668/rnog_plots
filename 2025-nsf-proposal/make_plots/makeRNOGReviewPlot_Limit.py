@@ -283,8 +283,8 @@ for i in range(0,1):
 
 import matplotlib.patheffects as pe
 
-axs.annotate('RNO-G-8',
-                    xy=(2.5e9*1E9, 0.7E-7), xycoords='data',
+axs.annotate('RNO-G-8 2027',
+                    xy=(2.5e9*1E9, 0.3E-7), xycoords='data',
                     horizontalalignment='center', color='firebrick', rotation=-10, fontsize=25,
                     path_effects=[pe.withStroke(linewidth=4, foreground="white")]
                     )

@@ -14,6 +14,9 @@ import os
 from expdata import *
 from modeldata import *
 from scipy import interpolate
+from matplotlib.legend_handler import HandlerTuple
+from matplotlib.container import ErrorbarContainer
+
 
 # YOU NEED TO CHANGE THIS IN BOTH expdata.py and modeldata.py 
 # TO UPDATE PROPERLY
@@ -430,8 +433,19 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
                               marker='o', markersize=4, ecolor='purple', linestyle='None', zorder=3,
                               label="Astro: IceCube and KM3NeT data"
                     )
+        from matplotlib.lines import Line2D
 
-        legends.append(heseleg)
+        # Create errorbar-style markers with both vertical and horizontal bars
+        purple_marker = Line2D([0], [0], marker='+', color='purple', 
+                            markersize=14, markeredgewidth=2,
+                            linestyle='', alpha=0.7)
+        orange_marker = Line2D([0], [0], marker='+', color='C1', 
+                            markersize=14, markeredgewidth=2,
+                            linestyle='', alpha=0.7)
+
+        legends.append((purple_marker, orange_marker))
+
+        # legends.append(heseleg)
 
                     
     if show_ice_cube_HESE_fit:
@@ -694,9 +708,20 @@ def get_E2_limit_figure(fig=None, ax=None, show_model_legend=True,
     legends.append(leg_brl_inside)
     legends.append(leg_brl_outside)
 
-    first_legend = plt.legend(handles=legends, loc='lower left', fontsize=legendfontsize, handlelength=3, ncol=2)
-    plt.gca().add_artist(first_legend)
+    # first_legend = plt.legend(handles=legends, loc='lower left', fontsize=legendfontsize, handlelength=3, ncol=2)
+    # plt.gca().add_artist(first_legend)
+    # Extract labels from legend handles (needed because some handles may be tuples)
+    legend_labels = []
+    for h in legends:
+        if isinstance(h, tuple):
+            legend_labels.append("Astro: IceCube and KM3NeT data")
+        else:
+            legend_labels.append(h.get_label())
 
+    first_legend = plt.legend(handles=legends, labels=legend_labels, loc='lower left', 
+                            fontsize=legendfontsize, handlelength=3, ncol=2,
+                            handler_map={tuple: HandlerTuple(ndivide=None)})
+    plt.gca().add_artist(first_legend)
 
     return fig, ax
 
